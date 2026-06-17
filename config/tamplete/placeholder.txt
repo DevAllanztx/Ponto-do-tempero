@@ -1,0 +1,4 @@
+Pasta `tamplete` criada.
+
+Cole seus arquivos HTML dentro de `tamplete/html/`.
+
