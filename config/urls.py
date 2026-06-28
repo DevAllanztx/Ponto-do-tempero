@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('estoque/', include('estoque.urls')),
+    path('', include('dashboard.urls')),
 ]
 
 if settings.DEBUG:
