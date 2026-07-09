@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ titulo }} - Ponto do Tempero</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+  body {
+    background: radial-gradient(ellipse at top left, #c8e6c0, #a8d5a0 40%, #7cbd72 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 18px;
+    padding: 48px 56px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .tag {
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: #5a8a4a;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1 {
+    color: #2d5a1f;
+    font-size: 30px;
+    margin-bottom: 12px;
+  }
+  p {
+    color: #4a7a3a;
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+  .btn-voltar {
+    display: inline-block;
+    text-decoration: none;
+    background: #5a8a4a;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    transition: background 0.2s;
+  }
+  .btn-voltar:hover { background: #3d7a2a; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="tag">Seção</div>
+    <h1>{{ titulo }}</h1>
+    <p>Esta tela ainda será construída.</p>
+    <a class="btn-voltar" href="{% url 'home' %}">← Voltar para a Home</a>
+  </div>
+</body>
+</html>

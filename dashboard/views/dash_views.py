@@ -1,4 +1,3 @@
-from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -16,7 +15,7 @@ def login_view(request):
             login(request, user)
             return redirect("home")
         return render(request, "login_ponto_tempero.html", {
-            "error": "Usuário ou senha inválidos.",
+            "error": "Usuário ou senha incorretos.",
             "usuario": usuario,
         })
 
@@ -33,25 +32,7 @@ def home(request):
     return render(request, "index.html")
 
 
-class PostView(generic.ListView):
-    # Mantém sua listagem (se existir Post model)
-    try:
-        from dashboard.models import Post
-
-        queryset = Post.objects.filter(status=1).order_by("-created_on")
-        template_name = "dashboard/post_list.html"
-    except Exception:
-        queryset = []
-        template_name = "index.html"
-
-
-class PostDetailView(generic.DetailView):
-    try:
-        from dashboard.models import Post
-
-        model = Post
-        template_name = "dashboard/index.html"
-    except Exception:
-        model = None
-        template_name = "index.html"
+@login_required(login_url="login")
+def placeholder(request, titulo):
+    return render(request, "placeholder.html", {"titulo": titulo})
 

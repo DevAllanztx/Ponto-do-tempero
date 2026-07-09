@@ -186,6 +186,19 @@ body::after {
     font-weight:500;
 }
 
+.btn-sair {
+    margin-left:6px;
+    text-decoration:none;
+    background:#5a8a4a;
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    padding:8px 16px;
+    border-radius:30px;
+    transition:background 0.2s;
+}
+.btn-sair:hover { background:#3d7a2a; }
+
 /* INFO cantos */
 .info-corner {
     position:absolute;
@@ -226,11 +239,11 @@ body::after {
 
 <div class="header">
     <nav class="menu">
-        <button class="active">HOME</button>
-        <button>PRODUTOS</button>
-        <button>MOVIMENTAÇÕES</button>
-        <button>RELATÓRIOS</button>
-        <button>CONTATOS</button>
+        <button class="active" onclick="window.location.href='{% url 'home' %}'">HOME</button>
+        <button onclick="window.location.href='{% url 'produtos' %}'">PRODUTOS</button>
+        <button onclick="window.location.href='{% url 'movimentacoes' %}'">MOVIMENTAÇÕES</button>
+        <button onclick="window.location.href='{% url 'relatorios' %}'">RELATÓRIOS</button>
+        <button onclick="window.location.href='{% url 'contatos' %}'">CONTATOS</button>
     </nav>
 </div>
 
@@ -247,6 +260,7 @@ body::after {
         <div class="nome">Administrador</div>
         <div class="cargo">Gerente do Sistema</div>
     </div>
+    <a class="btn-sair" href="{% url 'logout' %}">Sair</a>
 </div>
 
 <div class="info-corner">

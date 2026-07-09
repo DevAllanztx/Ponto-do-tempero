@@ -1,2 +1,1 @@
-from .produto_views import *
-from .categoria_views import *
+from .produtos_views import *
