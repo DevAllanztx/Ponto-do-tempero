@@ -1,1 +1,1 @@
-from .dash_views import home, PostView, PostDetailView
+from .dash_views import home, login_view, logout_view, PostView, PostDetailView
