@@ -1,0 +1,406 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Ponto do Tempero - Movimentações</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', 'Segoe UI', sans-serif; }
+
+    body {
+        min-height:100vh;
+        background: radial-gradient(circle at 15% 20%, #e4f0da 0%, transparent 40%),
+                    radial-gradient(circle at 90% 85%, #e4f0da 0%, transparent 35%),
+                    linear-gradient(180deg, #cfe3c2 0%, #9fc98a 45%, #cfe3c2 100%);
+        position:relative;
+        padding:32px 48px 120px;
+        color:#2f3d1f;
+    }
+
+    /* ---------- HEADER ---------- */
+    .header { display:flex; justify-content:center; margin-bottom:48px; }
+
+    .menu {
+        display:flex;
+        gap:4px;
+        background:rgba(255,255,255,0.55);
+        backdrop-filter:blur(6px);
+        padding:6px;
+        border-radius:50px;
+        box-shadow:0 8px 20px rgba(47,61,31,0.12);
+    }
+
+    .menu button {
+        border:none;
+        background:transparent;
+        padding:12px 28px;
+        border-radius:50px;
+        font-size:13px;
+        font-weight:600;
+        letter-spacing:0.5px;
+        color:#3d4d2a;
+        cursor:pointer;
+        transition:all .2s ease;
+    }
+
+    .menu button:hover { background:rgba(255,255,255,0.6); }
+
+    .menu button.active {
+        background:#4b5d2c;
+        color:#f4f8ee;
+        box-shadow:0 4px 10px rgba(75,93,44,0.4);
+    }
+
+    /* ---------- CONTENT ---------- */
+    .content {
+        max-width:1100px;
+        margin:0 auto;
+    }
+
+    .content-header {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:24px;
+        flex-wrap:wrap;
+        gap:16px;
+    }
+
+    .content-header h1 {
+        font-size:26px;
+        font-weight:700;
+        color:#33421f;
+        letter-spacing:0.5px;
+    }
+
+    .btn-nova {
+        background:#4b5d2c;
+        color:#f4f8ee;
+        border:none;
+        padding:12px 22px;
+        border-radius:50px;
+        font-size:13px;
+        font-weight:600;
+        letter-spacing:0.3px;
+        cursor:pointer;
+        box-shadow:0 6px 16px rgba(75,93,44,0.35);
+        transition:transform .15s ease;
+    }
+    .btn-nova:hover { transform:translateY(-2px); }
+
+    /* ---------- STAT ROW ---------- */
+    .stats-row { display:flex; gap:16px; margin-bottom:24px; }
+
+    .stat-mini {
+        background:rgba(255,255,255,0.6);
+        border-radius:16px;
+        padding:16px 22px;
+        min-width:120px;
+        box-shadow:0 6px 14px rgba(47,61,31,0.1);
+    }
+
+    .stat-mini .num { font-size:22px; font-weight:700; color:#33421f; }
+    .stat-mini .label { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#5c6b48; margin-top:2px; }
+
+    /* ---------- MESSAGES ---------- */
+    .messages { margin-bottom:16px; }
+    .msg {
+        padding:12px 18px;
+        border-radius:12px;
+        font-size:13px;
+        margin-bottom:8px;
+        font-weight:500;
+    }
+    .msg.success { background:#e1f0d4; color:#33421f; border:1px solid #a9cf8c; }
+    .msg.error { background:#f7dede; color:#7a2b2b; border:1px solid #e3a6a6; }
+
+    /* ---------- TABLE CARD ---------- */
+    .table-card {
+        background:rgba(255,255,255,0.65);
+        backdrop-filter:blur(6px);
+        border-radius:20px;
+        padding:8px;
+        box-shadow:0 10px 26px rgba(47,61,31,0.12);
+        overflow:hidden;
+    }
+
+    table { width:100%; border-collapse:collapse; }
+
+    thead th {
+        text-align:left;
+        font-size:11px;
+        text-transform:uppercase;
+        letter-spacing:0.6px;
+        color:#5c6b48;
+        padding:14px 18px;
+        border-bottom:1px solid rgba(75,93,44,0.15);
+    }
+
+    tbody td {
+        padding:14px 18px;
+        font-size:13.5px;
+        color:#33421f;
+        border-bottom:1px solid rgba(75,93,44,0.08);
+    }
+
+    tbody tr:last-child td { border-bottom:none; }
+    tbody tr:hover { background:rgba(75,93,44,0.05); }
+
+    .badge {
+        display:inline-block;
+        padding:4px 12px;
+        border-radius:50px;
+        font-size:11px;
+        font-weight:700;
+        letter-spacing:0.3px;
+    }
+    .badge.entrada { background:#dcefca; color:#33421f; }
+    .badge.saida   { background:#f3d9d3; color:#7a3a2b; }
+
+    .empty-state {
+        text-align:center;
+        padding:48px 20px;
+        color:#5c6b48;
+        font-size:14px;
+    }
+
+    /* ---------- USER CARD (rodapé esquerdo) ---------- */
+    .usuario {
+        position:fixed;
+        left:48px;
+        bottom:32px;
+        display:flex;
+        align-items:center;
+        gap:12px;
+        background:rgba(255,255,255,0.7);
+        padding:10px 20px 10px 10px;
+        border-radius:50px;
+        box-shadow:0 8px 20px rgba(47,61,31,0.15);
+    }
+    .avatar {
+        width:40px; height:40px; border-radius:50%;
+        background:#4b5d2c; color:#f4f8ee;
+        display:flex; align-items:center; justify-content:center;
+        font-weight:700; font-size:13px;
+    }
+    .info-usuario .nome { font-size:13px; font-weight:700; color:#33421f; }
+    .info-usuario .cargo { font-size:11px; color:#5c6b48; }
+    .btn-sair {
+        margin-left:10px;
+        background:transparent;
+        border:1px solid #4b5d2c;
+        color:#33421f;
+        padding:6px 16px;
+        border-radius:50px;
+        font-size:11px;
+        font-weight:600;
+        cursor:pointer;
+        text-decoration:none;
+    }
+
+    /* ---------- MODAL ---------- */
+    .modal-overlay {
+        display:none;
+        position:fixed; inset:0;
+        background:rgba(47,61,31,0.35);
+        align-items:center; justify-content:center;
+        z-index:50;
+    }
+    .modal-overlay.open { display:flex; }
+
+    .modal {
+        background:#f4f8ee;
+        width:100%; max-width:420px;
+        border-radius:20px;
+        padding:28px;
+        box-shadow:0 20px 50px rgba(47,61,31,0.3);
+    }
+    .modal h2 { font-size:18px; color:#33421f; margin-bottom:20px; }
+
+    .field { margin-bottom:16px; }
+    .field label {
+        display:block; font-size:11px; text-transform:uppercase;
+        letter-spacing:0.4px; color:#5c6b48; margin-bottom:6px; font-weight:600;
+    }
+    .field select, .field input {
+        width:100%; padding:10px 14px;
+        border:1px solid rgba(75,93,44,0.25);
+        border-radius:10px;
+        font-size:13.5px;
+        background:#fff;
+        color:#33421f;
+    }
+
+    .tipo-toggle { display:flex; gap:10px; }
+    .tipo-toggle label {
+        flex:1; text-align:center;
+        padding:10px; border-radius:10px;
+        border:1px solid rgba(75,93,44,0.25);
+        font-size:12.5px; font-weight:600;
+        cursor:pointer; color:#5c6b48;
+    }
+    .tipo-toggle input { display:none; }
+    .tipo-toggle input:checked + span { color:inherit; }
+    .tipo-toggle .op-entrada:has(input:checked) { background:#dcefca; border-color:#a9cf8c; color:#33421f; }
+    .tipo-toggle .op-saida:has(input:checked) { background:#f3d9d3; border-color:#e3a6a6; color:#7a3a2b; }
+
+    .modal-actions { display:flex; gap:10px; margin-top:22px; }
+    .modal-actions button {
+        flex:1; padding:12px; border-radius:50px;
+        font-size:13px; font-weight:600; cursor:pointer; border:none;
+    }
+    .btn-cancelar { background:transparent; border:1px solid #4b5d2c !important; color:#33421f; }
+    .btn-confirmar { background:#4b5d2c; color:#f4f8ee; }
+</style>
+</head>
+<body>
+
+    <div class="header">
+        <nav class="menu">
+            <button data-url="{% url 'home' %}">HOME</button>
+            <button data-url="{% url 'produtos' %}">PRODUTOS</button>
+            <button class="active" data-url="{% url 'movimentacoes' %}">MOVIMENTAÇÕES</button>
+            <button data-url="{% url 'relatorios' %}">RELATÓRIOS</button>
+            <button data-url="{% url 'contatos' %}">CONTATOS</button>
+        </nav>
+    </div>
+
+    <div class="content">
+
+        <div class="content-header">
+            <h1>Movimentações de Estoque</h1>
+            <button class="btn-nova" onclick="abrirModal()">+ Nova Movimentação</button>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-mini">
+                <div class="num">{{ total_entradas }}</div>
+                <div class="label">Entradas</div>
+            </div>
+            <div class="stat-mini">
+                <div class="num">{{ total_saidas }}</div>
+                <div class="label">Saídas</div>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="msg {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="table-card">
+            {% if movimentacoes %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Responsável</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mov in movimentacoes %}
+                    <tr>
+                        <td>{{ mov.data|date:"d/m/Y H:i" }}</td>
+                        <td>{{ mov.produto.nome }}</td>
+                        <td>{{ mov.produto.get_categoria_display }}</td>
+                        <td>
+                            <span class="badge {{ mov.tipo }}">
+                                {% if mov.tipo == "entrada" %}Entrada{% else %}Saída{% endif %}
+                            </span>
+                        </td>
+                        <td>{{ mov.quantidade }}</td>
+                        <td>{{ mov.responsavel.get_full_name|default:mov.responsavel.username|default:"—" }}</td>
+                        <td>{{ mov.observacao|default:"—" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">Nenhuma movimentação registrada ainda. Clique em "Nova Movimentação" para começar.</div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class="usuario">
+        <div class="avatar">{{ request.user.first_name|slice:":1"|default:"?" }}{{ request.user.last_name|slice:":1" }}</div>
+        <div class="info-usuario">
+            <div class="nome">{{ request.user.get_full_name|default:request.user.username }}</div>
+            <div class="cargo">Gerente do Sistema</div>
+        </div>
+        <a class="btn-sair" href="{% url 'logout' %}">Sair</a>
+    </div>
+
+    <!-- MODAL NOVA MOVIMENTAÇÃO -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2>Nova Movimentação</h2>
+            <form method="post" action="{% url 'movimentacoes' %}">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label for="produto">Produto</label>
+                    <select name="produto" id="produto" required>
+                        <option value="" disabled selected>Selecione um produto</option>
+                        {% for produto in produtos %}
+                        <option value="{{ produto.id }}">{{ produto.nome }} — {{ produto.get_categoria_display }} ({{ produto.quantidade }} em estoque)</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Tipo</label>
+                    <div class="tipo-toggle">
+                        <label class="op-entrada">
+                            <input type="radio" name="tipo" value="entrada" checked>
+                            <span>Entrada</span>
+                        </label>
+                        <label class="op-saida">
+                            <input type="radio" name="tipo" value="saida">
+                            <span>Saída</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" name="quantidade" id="quantidade" min="1" required>
+                </div>
+
+                <div class="field">
+                    <label for="observacao">Observação (opcional)</label>
+                    <input type="text" name="observacao" id="observacao" maxlength="255">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn-confirmar">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal() { document.getElementById('modalOverlay').classList.add('open'); }
+        function fecharModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+        document.getElementById('modalOverlay').addEventListener('click', function(e){
+            if (e.target === this) fecharModal();
+        });
+
+        document.querySelectorAll('.menu button[data-url]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                window.location.href = btn.dataset.url;
+            });
+        });
+    </script>
+
+</body>
+</html>

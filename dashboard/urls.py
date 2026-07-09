@@ -11,5 +11,6 @@ urlpatterns = [
     path("movimentacoes/", views.placeholder, {"titulo": "Movimentações"}, name="movimentacoes"),
     path("relatorios/", views.placeholder, {"titulo": "Relatórios"}, name="relatorios"),
     path("contatos/", views.placeholder, {"titulo": "Contatos"}, name="contatos"),
+    
 ]
 
