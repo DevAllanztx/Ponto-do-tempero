@@ -1,3 +1,5 @@
-from django.contrib import admin
+﻿from django.contrib import admin
+from estoque.models import Categoria, Produto
 
-# Register your models here.
+admin.site.register(Categoria)
+admin.site.register(Produto)
