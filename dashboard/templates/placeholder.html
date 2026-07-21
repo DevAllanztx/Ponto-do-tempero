@@ -1,65 +1,46 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ titulo }} - Ponto do Tempero</title>
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
-  body {
-    background: radial-gradient(ellipse at top left, #c8e6c0, #a8d5a0 40%, #7cbd72 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .card {
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.6);
-    border-radius: 18px;
-    padding: 48px 56px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  }
-  .tag {
-    font-size: 12px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    color: #5a8a4a;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  h1 {
-    color: #2d5a1f;
-    font-size: 30px;
-    margin-bottom: 12px;
-  }
-  p {
-    color: #4a7a3a;
-    font-size: 15px;
-    margin-bottom: 28px;
-  }
-  .btn-voltar {
-    display: inline-block;
-    text-decoration: none;
-    background: #5a8a4a;
-    color: #fff;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 12px 28px;
-    border-radius: 30px;
-    transition: background 0.2s;
-  }
-  .btn-voltar:hover { background: #3d7a2a; }
-</style>
-</head>
-<body>
-  <div class="card">
-    <div class="tag">Seção</div>
-    <h1>{{ titulo }}</h1>
-    <p>Esta tela ainda será construída.</p>
-    <a class="btn-voltar" href="{% url 'home' %}">← Voltar para a Home</a>
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }} · Ponto do Tempero{% endblock %}
+{% block page_title %}{{ titulo }}{% endblock %}
+
+{% block nav_produtos %}{% if titulo == "Produtos" %}active{% endif %}{% endblock %}
+{% block nav_mov %}{% if titulo == "Movimentações" %}active{% endif %}{% endblock %}
+{% block nav_rel %}{% if titulo == "Relatórios" %}active{% endif %}{% endblock %}
+{% block nav_contatos %}{% if titulo == "Contatos" %}active{% endif %}{% endblock %}
+
+{% block content %}
+{% if titulo == "Produtos" %}
+  <div class="bar">
+    <div class="filters">
+      <button class="chip active">Todos</button>
+      <button class="chip">Especiarias</button>
+      <button class="chip">Grãos</button>
+      <button class="chip">Óleos</button>
+      <button class="chip">Alertas</button>
+    </div>
+    <a class="cta" href="#">+ Novo produto</a>
   </div>
-</body>
-</html>
+  <div class="panel">
+    <table>
+      <thead><tr><th>Produto</th><th>Categoria</th><th class="right">Estoque</th><th class="right">Preço</th><th class="right">Situação</th><th class="right">Ações</th></tr></thead>
+      <tbody>
+        <tr><td class="pn">Alho nacional</td><td>Temperos frescos</td><td class="right">120 kg</td><td class="right">R$ 24,90</td><td class="right"><span class="tag ok">OK</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+        <tr><td class="pn">Pimenta-do-reino</td><td>Especiarias</td><td class="right">8 kg</td><td class="right">R$ 62,00</td><td class="right"><span class="tag low">Baixo</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+        <tr><td class="pn">Orégano desidratado</td><td>Ervas secas</td><td class="right">45 kg</td><td class="right">R$ 38,50</td><td class="right"><span class="tag ok">OK</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+        <tr><td class="pn">Azeite extravirgem</td><td>Óleos</td><td class="right">3 un</td><td class="right">R$ 41,90</td><td class="right"><span class="tag crit">Crítico</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+        <tr><td class="pn">Arroz agulhinha</td><td>Grãos</td><td class="right">210 kg</td><td class="right">R$ 6,20</td><td class="right"><span class="tag ok">OK</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+        <tr><td class="pn">Açafrão-da-terra</td><td>Especiarias</td><td class="right">6 kg</td><td class="right">R$ 29,00</td><td class="right"><span class="tag low">Baixo</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+        <tr><td class="pn">Sal grosso</td><td>Básicos</td><td class="right">180 kg</td><td class="right">R$ 3,10</td><td class="right"><span class="tag ok">OK</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+        <tr><td class="pn">Feijão carioca</td><td>Grãos</td><td class="right">95 kg</td><td class="right">R$ 8,40</td><td class="right"><span class="tag ok">OK</span></td><td class="right"><a class="act" href="#">Editar</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="empty">
+    <span class="badge">Seção</span>
+    <h2>{{ titulo }}</h2>
+    <p>Esta tela ainda será construída. Em breve você poderá gerenciar {{ titulo|lower }} por aqui.</p>
+    <a class="cta" href="{% url 'home' %}">← Voltar para a Home</a>
+  </div>
+{% endif %}
+{% endblock %}
